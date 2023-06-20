@@ -1,0 +1,22 @@
+{
+  "clients": [
+    {
+      "clientId": 1,
+      "name": "Jimmy",
+      "age": 8,
+      "behaviors": ["pull up pants", "brush teeth", "make eye contact"]
+    },
+    {
+      "clientId": 2,
+      "name": "Sarah",
+      "age": 12,
+      "behaviors": ["reading", "writing", "make eye contact"]
+    },
+    {
+      "clientId": 3,
+      "name": "Nico",
+      "age": 7,
+      "behaviors": ["reading", "writing", "make eye contact"]
+    }
+  ]
+}
