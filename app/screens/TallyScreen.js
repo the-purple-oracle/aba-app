@@ -7,6 +7,7 @@ import {
   Dimensions,
 } from 'react-native';
 var { width } = Dimensions.get('window');
+
 const TallyScreen = (props) => {
   const { title } = props;
   const [count, setCount] = useState(0);
@@ -14,12 +15,14 @@ const TallyScreen = (props) => {
   const pressHandler = () => {
     let newCount = count + 1;
     setCount(newCount);
+    props.getTally(title, newCount);
   };
   const longPressHandler = () => {
     let curCount = count;
     if (curCount > 0) {
       let newCount = count - 1;
       setCount(newCount);
+      props.getTally(title, newCount);
     }
   };
 
@@ -39,7 +42,6 @@ const TallyScreen = (props) => {
 };
 const styles = StyleSheet.create({
   outer: {
-    backgroundColor: 'blue',
     marinTop: 100,
     alignItems: 'center',
     justifyContent: 'center',

@@ -5,9 +5,7 @@ const ListItem = (props) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() =>
-        props.navigation.navigate('Client', { client: props.client })
-      }
+      onPress={() => props.navigation.navigate('Client', props.client)}
     >
       <Text style={styles.txt}>{props.client.name}</Text>
     </TouchableOpacity>
