@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import TallyScreen from './TallyScreen';
-import StyledButton from '../Shared/StyledButton';
+import TallyScreen from '../TallyScreen';
+import StyledButton from '../../shared/StyledButton';
 
 const Client = (props) => {
   const client = props.route.params;

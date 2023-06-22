@@ -1,27 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './app/screens/HomeScreen';
-import Client from './app/screens/Client';
-const Stack = createNativeStackNavigator();
+import Auth from './app/context/store/Auth';
+import Main from './navigators/Main';
+
+//link to heroku server
+// https://aba-server1-81e909527026.herokuapp.com/api/v1/
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name='Home'
-          component={HomeScreen}
-          options={{ title: 'Welcome' }}
-        />
-        <Stack.Screen name='Client' component={Client} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Auth>
+      <NavigationContainer>
+        <Main />
+      </NavigationContainer>
+    </Auth>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+const styles = StyleSheet.create({});
