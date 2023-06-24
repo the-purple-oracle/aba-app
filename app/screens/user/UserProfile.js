@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
-import { View, Text, Button, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useFocusEffect } from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,6 +14,25 @@ const UserProfile = (props) => {
   const context = useContext(AuthGlobal);
   const [userProfile, setUserProfile] = useState();
 
+  //added useEffect to load userProfile since there was a delay with useFocusEffect
+  useEffect(() => {
+    if (context.stateUser.isAuthenticated) {
+      AsyncStorage.getItem('jwt')
+        .then((res) => {
+          axios
+            .get(`${baseURL}users/${context.stateUser.user.userId}`, {
+              headers: { Authorization: `Bearer ${res}` },
+            })
+            .then((user) => setUserProfile(user.data));
+        })
+        .catch((error) => console.log(error));
+    }
+
+    return () => {
+      setUserProfile();
+    };
+  }, [context.stateUser.isAuthenticated]);
+
   useFocusEffect(
     useCallback(() => {
       if (
@@ -22,22 +41,6 @@ const UserProfile = (props) => {
       ) {
         props.navigation.navigate('Login');
       }
-
-      if (context.stateUser.isAuthenticated) {
-        AsyncStorage.getItem('jwt')
-          .then((res) => {
-            axios
-              .get(`${baseURL}users/${context.stateUser.user.userId}`, {
-                headers: { Authorization: `Bearer ${res}` },
-              })
-              .then((user) => setUserProfile(user.data));
-          })
-          .catch((error) => console.log(error));
-      }
-
-      return () => {
-        setUserProfile();
-      };
     }, [context.stateUser.isAuthenticated])
   );
 
@@ -48,29 +51,29 @@ const UserProfile = (props) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.subContainer}>
-        <Text style={{ fontSize: 30 }}>
+      <View>
+        <Text style={{ fontSize: 25 }}>
           {userProfile ? userProfile.name : ''}
         </Text>
-        <View style={{ marginTop: 20 }}>
-          <Text style={{ margin: 10 }}>
-            Email: {userProfile ? userProfile.email : ''}
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <Text style={{ margin: 10 }}>
+          Email: {userProfile ? userProfile.email : ''}
+        </Text>
+      </View>
+      <View style={{ marginTop: 30 }}>
+        <StyledButton secondary large onPress={handleSignOut}>
+          <Text
+            style={{
+              alignSelf: 'center',
+              color: 'white',
+              fontWeight: 'bold',
+            }}
+          >
+            Sign Out
           </Text>
-        </View>
-        <View style={{ marginTop: 30 }}>
-          <StyledButton secondary large onPress={handleSignOut}>
-            <Text
-              style={{
-                alignSelf: 'center',
-                color: 'white',
-                fontWeight: 'bold',
-              }}
-            >
-              Sign Out
-            </Text>
-          </StyledButton>
-        </View>
-      </ScrollView>
+        </StyledButton>
+      </View>
     </View>
   );
 };

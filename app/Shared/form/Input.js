@@ -11,6 +11,7 @@ const Input = (props) => {
       value={props.value}
       autoCorrect={props.autoCorrect}
       onChangeText={props.onChangeText}
+      onSubmitEditing={props.onSubmitEditing}
       onFocus={props.onFocus}
       secureTextEntry={props.secureTextEntry}
       keyboardType={props.keyboardType}

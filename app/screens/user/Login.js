@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import FormContainer from '../../shared/form/FormContainer';
 import Input from '../../shared/form/Input';
@@ -13,6 +13,16 @@ const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState();
+
+  //hide bottom nav bar
+  useLayoutEffect(() => {
+    const hideUnsubscribe = props.navigation.addListener('focus', (e) => {
+      let parentNav = props.navigation.getParent();
+      parentNav.setOptions({
+        tabBarStyle: { display: 'none' },
+      });
+    });
+  }, []);
 
   useEffect(() => {
     if (context.stateUser.isAuthenticated === true) {

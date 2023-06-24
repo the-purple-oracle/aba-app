@@ -42,7 +42,7 @@ const TallyScreen = (props) => {
 };
 const styles = StyleSheet.create({
   outer: {
-    marinTop: 100,
+    padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },

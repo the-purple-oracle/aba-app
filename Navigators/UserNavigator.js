@@ -1,8 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Login from '../app/screens/user/Login';
-import Register from '../app/screens/user/Register';
 import UserProfile from '../app/screens/user/UserProfile';
 
 const Stack = createNativeStackNavigator();
@@ -13,20 +11,6 @@ function MyStack() {
       <Stack.Screen
         name='User Profile'
         component={UserProfile}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name='Login'
-        component={Login}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name='Register'
-        component={Register}
         options={{
           headerShown: false,
         }}

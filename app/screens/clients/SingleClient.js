@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import TallyScreen from '../TallyScreen';
 import StyledButton from '../../shared/StyledButton';
 
@@ -36,11 +36,36 @@ const Client = (props) => {
           <Text>get tallies</Text>
         </StyledButton>
       </View>
-      {behaviors.map((b, i) => (
-        <TallyScreen key={i} title={b} getTally={getTally} />
-      ))}
+      <View style={styles.behaviorContainer}>
+        {/* {behaviors.map((b, i) => (
+          <TallyScreen key={i} title={b} getTally={getTally} />
+        ))} */}
+        <FlatList
+          data={client.behaviors}
+          numColumns={2}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+          }}
+          renderItem={({ item }) => (
+            <TallyScreen title={item} getTally={getTally} />
+          )}
+          contentContainerStyle={[styles.flatListStyles]}
+        />
+      </View>
     </View>
   );
 };
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  behaviorContainer: {
+    height: '80%',
+    alignItems: 'center',
+    margin: 10,
+  },
+  flatListStyles: {
+    height: '80%',
+    alignItems: 'center',
+    margin: 10,
+    alignItems: 'flex-start',
+  },
+});
 export default Client;

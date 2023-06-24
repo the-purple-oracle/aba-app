@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import HomeNavigator from './HomeNavigator';
 import ClientsNavigator from './ClientsNavigator';
 import UserNavigator from './UserNavigator';
+
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
