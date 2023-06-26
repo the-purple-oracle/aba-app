@@ -1,5 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
 import FormContainer from '../../shared/form/FormContainer';
 import Input from '../../shared/form/Input';
 import Toast from 'react-native-toast-message';
@@ -9,9 +16,10 @@ import axios from 'axios';
 import AuthGlobal from '../../context/store/AuthGlobal';
 import { useNavigation } from '@react-navigation/native';
 
-const AddClient = (props) => {
+const EditClient = (props) => {
   const context = useContext(AuthGlobal);
   const navigation = useNavigation();
+  const client = props.route.params;
   const [name, setName] = useState('');
   const [behaviors, setBehaviors] = useState(['']);
   const [notes, setNotes] = useState('');
@@ -25,10 +33,16 @@ const AddClient = (props) => {
       })
       .catch((error) => console.log(error));
 
+    setName(client.name);
+    setBehaviors(client.behaviors);
+    setNotes(client.notes[0]);
     setUser(context.stateUser.user.userId);
 
     return () => {
       setToken();
+      setName('');
+      setBehaviors([]);
+      setNotes('');
       setUser('');
     };
   }, []);
@@ -44,7 +58,7 @@ const AddClient = (props) => {
         text2: 'Try again later',
       });
     } else {
-      let newClient = {
+      let editedClient = {
         name: name,
         behaviors: behaviors,
         notes: notes,
@@ -57,13 +71,13 @@ const AddClient = (props) => {
         },
       };
       axios
-        .post(`${baseURL}clients`, newClient, config)
+        .put(`${baseURL}clients/${client._id}`, editedClient, config)
         .then((res) => {
           if (res.status == 200 || res.status == 201) {
             Toast.show({
               topOffset: 60,
               type: 'success',
-              text1: 'New client successfully added',
+              text1: 'New client successfully updated',
               text2: '',
             });
 
@@ -121,22 +135,26 @@ const AddClient = (props) => {
         <Text style={styles.labelText}>Behaviors</Text>
         <Button title='add' onPress={() => handleAdd()} />
       </View>
-
-      {behaviors.map((data, i) => {
-        return (
-          <View style={styles.behaviorInput} key={i}>
-            <TextInput
-              key={i}
-              value={behaviors[i]}
-              placeholder='add behavior'
-              onChangeText={(e) => handleChange(e, i)}
-              style={styles.input}
-            />
-            <Button title='x' onPress={() => handleDelete(i)} />
-          </View>
-        );
-      })}
-
+      {behaviors ? (
+        behaviors.map((data, i) => {
+          return (
+            <View style={styles.behaviorInput} key={i}>
+              <TextInput
+                key={i}
+                value={behaviors[i]}
+                placeholder='add behavior'
+                onChangeText={(e) => handleChange(e, i)}
+                style={styles.input}
+              />
+              <Button title='x' onPress={() => handleDelete(i)} />
+            </View>
+          );
+        })
+      ) : (
+        <View style={styles.loading}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      )}
       <Text style={styles.labelText}>Notes</Text>
       <TextInput
         style={styles.notesInput}
@@ -191,5 +209,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'orange',
   },
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+  },
 });
-export default AddClient;
+
+export default EditClient;

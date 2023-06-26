@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import TallyScreen from '../TallyScreen';
 import StyledButton from '../../shared/StyledButton';
+import { useNavigation } from '@react-navigation/native';
 
 const Client = (props) => {
+  const navigation = useNavigation();
   const client = props.route.params;
   let behaviors = client.behaviors;
   const [tallies, setTallies] = useState();
@@ -30,16 +32,25 @@ const Client = (props) => {
   };
   return (
     <View>
-      <Text>{client.name}</Text>
+      <View style={styles.clientHeader}>
+        <Text style={{ fontSize: 20 }}>{client.name}</Text>
+      </View>
+
       <View>
         <StyledButton secondary large>
           <Text>get tallies</Text>
         </StyledButton>
       </View>
+      <View>
+        <StyledButton
+          secondary
+          large
+          onPress={() => navigation.navigate('Edit Client', client)}
+        >
+          <Text>Edit Client</Text>
+        </StyledButton>
+      </View>
       <View style={styles.behaviorContainer}>
-        {/* {behaviors.map((b, i) => (
-          <TallyScreen key={i} title={b} getTally={getTally} />
-        ))} */}
         <FlatList
           data={client.behaviors}
           numColumns={2}
@@ -56,6 +67,10 @@ const Client = (props) => {
   );
 };
 const styles = StyleSheet.create({
+  clientHeader: {
+    alignItems: 'center',
+    paddingTop: 20,
+  },
   behaviorContainer: {
     height: '80%',
     alignItems: 'center',

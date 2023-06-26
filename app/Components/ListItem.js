@@ -5,7 +5,7 @@ const ListItem = (props) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => props.navigation.navigate('Client', props.client)}
+      onPress={() => props.navigation.navigate('Clients', props.client)}
     >
       <Text style={styles.txt}>{props.client.name}</Text>
     </TouchableOpacity>
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomWidth: 2,
     borderBottomColor: 'gainsboro',
+    margin: 10,
   },
   txt: {
     fontSize: 20,

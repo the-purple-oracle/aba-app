@@ -28,7 +28,10 @@ const TallyScreen = (props) => {
 
   return (
     <View style={styles.outer}>
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+
       <TouchableOpacity
         onLongPress={() => longPressHandler()}
         onPress={() => pressHandler()}
@@ -55,8 +58,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
+    position: 'absolute',
     width: width / 3,
     alignSelf: 'center',
+    bottom: 0,
+  },
+  titleContainer: {
+    height: width / 6,
+    width: width / 3,
   },
 });
 export default TallyScreen;

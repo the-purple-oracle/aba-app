@@ -40,12 +40,12 @@ const Main = () => {
         }}
       />
       <Tab.Screen
-        name='Client'
+        name='Clients'
         component={ClientsNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <View>
-              <Icon name='shopping-cart' color={color} size={30} />
+              <Icon name='users' color={color} size={30} />
             </View>
           ),
         }}

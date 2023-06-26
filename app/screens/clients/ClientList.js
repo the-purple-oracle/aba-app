@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
 import StyledButton from '../../shared/StyledButton';
 import ListItem from '../../components/ListItem';
 import { useFocusEffect } from '@react-navigation/core';
@@ -55,7 +61,8 @@ const ClientList = (props) => {
     props.navigation.navigate('Add Client');
   };
   return (
-    <View style={styles.listContainer}>
+    <ScrollView>
+      {/* <View style={styles.listContainer}> */}
       <Text style={styles.title}>Clients</Text>
       {clients ? (
         clients?.map((c) => (
@@ -71,7 +78,8 @@ const ClientList = (props) => {
           <Text style={styles.btnText}>Add Client</Text>
         </StyledButton>
       </View>
-    </View>
+      {/* </View> */}
+    </ScrollView>
   );
 };
 

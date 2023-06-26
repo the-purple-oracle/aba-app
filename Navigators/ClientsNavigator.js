@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ClientList from '../app/screens/clients/ClientList';
 import SingleClient from '../app/screens/clients/SingleClient';
 import AddClient from '../app/screens/clients/AddClient';
+import EditClient from '../app/screens/clients/EditClient';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,8 +17,9 @@ function MyStack() {
           headerShown: false,
         }}
       />
-      <Stack.Screen name='Client' component={SingleClient} />
+      <Stack.Screen name='Clients' component={SingleClient} />
       <Stack.Screen name='Add Client' component={AddClient} />
+      <Stack.Screen name='Edit Client' component={EditClient} />
     </Stack.Navigator>
   );
 }
